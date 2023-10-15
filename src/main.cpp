@@ -23,7 +23,6 @@
 #include "GPS.h"
 #include "skill.h"
 
-
 using namespace std;
 using namespace vex;
 
