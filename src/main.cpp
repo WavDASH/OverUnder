@@ -22,6 +22,7 @@
 #include "iostream"
 #include "GPS.h"
 #include "skill.h"
+int peter;
 
 
 using namespace std;
