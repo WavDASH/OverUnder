@@ -20,31 +20,38 @@ void auton_near_1(){
   setIntakeSpeed(100);
   setCataStatus(5, 0);
   softStartTimerForward(0, 80, 200);
-  posForwardAbsWithHeading(80, 1100, 0);
-  PIDPosForwardAbs(1280);
+  posForwardAbsWithHeading(80, 1000, 0);
+  PIDPosForwardAbs(1180);
   PIDPosForwardAbs(670);
-  PIDAngleRotateAbs(-135, 2.5, 0.03, 5, 1.5);
-  // this_thread::sleep_for(50);
-  setCataStatus(2);
-  this_thread::sleep_for(300);
+  PIDAngleRotateAbs(-135, 2.5, 0.05, 5, 1.5);
+  setCataStatus(2, 0); // shoot
+  this_thread::sleep_for(200);
+
+  PIDAngleRotateAbs(-160, 2, 0.05, 4);
+  PIDPosForwardAbs(500);
+  posForwardAbsWithHeading(90, 0, -160);
+  setIntakeSpeed(0);
+  //PIDPosForwardAbs(-600);
+  PIDAngleRotateAbs(-80, 2, 0.05, 4);
+  setIntakeSpeed(-100);
+  posForwardAbsWithHeading(50, 400, -80);
+  voltageForward(70);
+  this_thread::sleep_for(200);
+  lockBase();
+  this_thread::sleep_for(50);
 
   setIntakeSpeed(0);
-  PIDAngleRotateAbs(-150);
-  setCataStatus(5);
-  PIDPosForwardAbs(830);
-  setPistonHook(1);
-  voltageForward(15);
+  PIDPosForwardAbs(0);
+  PIDAngleRotateAbs(40, 2, 0.05, 5);
+  posForwardAbsWithHeading(50, -1300, 20);
+  voltageForward(-10);
   this_thread::sleep_for(400);
 
-  resetForwardPos();
-  PIDPosForwardAbs(-500);
+  setPistonHook(1);
   this_thread::sleep_for(100);
-  resetForwardPos();
-  PIDPosCurveAbs(1, 800);
+  PIDAngleRotateAbs(-80, 2, 0.05, 5);
   setPistonHook(0);
-  setIntakeSpeed(-100);
-  PIDPosForwardAbs(800);
-  setIntakeSpeed(0);
+  PIDPosForwardAbs(-600);
 
   Brain.Screen.setCursor(8, 1);
   Brain.Screen.print("Auton Time: %.1f                 ", autotimer.getTime());
