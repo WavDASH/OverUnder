@@ -8,7 +8,6 @@
 /*----------------------------------------------------------------------------*/
 
 #include "vex.h"
-int a;
 
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
