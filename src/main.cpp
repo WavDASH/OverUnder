@@ -26,6 +26,7 @@
 
 using namespace std;
 using namespace vex;
+int b;
 
 // A global instance of competition
 competition Competition;
