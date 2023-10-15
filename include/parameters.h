@@ -6,7 +6,7 @@
 static int CRTCOLOR = 1; // 1 is red, 0 is blue
 
 const float Movement_LowerLimit = 5;
-const float Joystick_LowerDeadzone = 5;
+const float Joystick_LowerDeadzone = 2;
 volatile static float gpsPosX, gpsPosY, gpsHeading;
 volatile static float vision_obj_x, vision_obj_y, vision_obj_height, vision_obj_width;
 
