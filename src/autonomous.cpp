@@ -79,9 +79,9 @@ void auton_near_2(){
   setCataStatus(5,0);
   PIDPosForwardAbs(0);
   PIDAngleRotateAbs(-90,1.1,0.05,5);
-  PIDPosForwardAbs(-570);
+  PIDPosForwardAbs(-580);
   PIDAngleRotateAbs(-135,1.1,0.05,5);
-  PIDPosForwardAbs(-895);
+  PIDPosForwardAbs(-885);
   //PIDPosCurveAbs(-1600,-1100,5);
   
   this_thread::sleep_for(100);
@@ -126,7 +126,7 @@ void auton_far_1(){
 
   PIDPosForwardAbs(0);
   PIDAngleRotateAbs(-165, 1.5, 0.05, 10);
-  PIDPosForwardAbs(550);
+  PIDPosForwardAbs(570);
   PIDAngleRotateAbs(-75, 1.5, 0.05, 10);
   setIntakeSpeed(100);
   //PIDPosForwardAbs(350);

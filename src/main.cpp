@@ -58,7 +58,7 @@ void pre_auton(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-int auton_choose = 2;
+int auton_choose = 3;
 bool autolowlift = 0;
 bool firstTime = 1;
 
@@ -104,15 +104,11 @@ void usercontrol(void) {
     else autocollide = 0;
     
     if(LEFT && !LEFTPressed){  // Auto low lift
-      if (firstTime){  // First time, only close the hook
-        setPistonE1(1);
-        firstTime = !firstTime;
-      }
-      else {
-        autolowlift = !autolowlift;
-        clearLowLiftStep();
-        setPistonE1(!autolowlift);
-      }
+      setPistonE1(1);
+      this_thread::sleep_for(200);
+      setPistonE1(0);
+      autolowlift = !autolowlift;
+      clearLowLiftStep();
     }
     LEFTPressed = LEFT;
     
