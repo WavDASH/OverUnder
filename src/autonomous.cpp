@@ -63,25 +63,25 @@ void auton_near_2(){
   setIntakeSpeed(0);
   setPistonHook(1);
   this_thread::sleep_for(300);
-  PIDAngleRotateAbs(-90, 1.1, 0.05, 5);
+  PIDAngleRotateAbs(-90, 1.5, 0.05, 5);
   setPistonHook(0);
 
-  PIDPosForwardAbs(630);
+  PIDPosForwardAbs(650);
   //PIDPosCurveAbs(500,300,5);
-  PIDAngleRotateAbs(-45, 0.8, 0.05, 5);
+  PIDAngleRotateAbs(-45, 1.1, 0.05, 5);
   setIntakeSpeed(-100);
-  voltageForward(15);
+  voltageForward(10);
   this_thread::sleep_for(300);
-  voltageForward(70);
+  voltageForward(90);
   this_thread::sleep_for(400);
 
   setIntakeSpeed(0);
   setCataStatus(5,0);
   PIDPosForwardAbs(0);
-  PIDAngleRotateAbs(-90,0.8,0.05,5);
-  PIDPosForwardAbs(-550);
-  PIDAngleRotateAbs(-135,0.8,0.05,5);
-  PIDPosForwardAbs(-950);
+  PIDAngleRotateAbs(-90,1.1,0.05,5);
+  PIDPosForwardAbs(-570);
+  PIDAngleRotateAbs(-135,1.1,0.05,5);
+  PIDPosForwardAbs(-895);
   //PIDPosCurveAbs(-1600,-1100,5);
   
   this_thread::sleep_for(100);

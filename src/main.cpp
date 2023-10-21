@@ -58,7 +58,7 @@ void pre_auton(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-int auton_choose = 3;
+int auton_choose = 2;
 bool autolowlift = 0;
 bool firstTime = 1;
 
