@@ -172,6 +172,9 @@ void usercontrol(void) {
 
       Brain.Screen.setCursor(5, 1);
       Brain.Screen.print("m_degree: %.1f                     ", m_degree);
+
+      Controller1.Screen.setCursor(1, 1);
+      Controller1.Screen.print("Auton choose: %d", auton_choose);
     }
     print_i += 1;
     print_i %= 100;

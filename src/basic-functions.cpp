@@ -115,6 +115,7 @@ void moveClockwise(float _input) {
   moveLeft(_input);
   moveRight(-_input);
 }
+
 void lockBase(void) {
   // lock the base
   lockLeft();
@@ -258,7 +259,7 @@ void autoLowLift(){
 // 5 = switch cata height  4 = initial
 // 0 = pulling down to preshoot position
 int cataMode = 1;
-int cataStatus = 4;
+int cataStatus = -1;
 
 void setCataStatus(int status, int mode){
   cataStatus = status;
@@ -275,6 +276,28 @@ void catapult(){
   double ready_Pos = Motor_Cata1.position(deg);
 
   while(true){
+    if (cataStatus == -1){
+      while(1){
+        if (limit1.PRESSED){
+          Motor_Cata1.stop(hold);
+          setCataStatus(1);
+          Motor_Cata1.resetPosition();
+          cataMode = 1;
+          break;
+        }else{
+          Motor_Cata1.setVelocity(45, percent);
+          Motor_Cata1.spin(fwd);
+          ready_Pos = -2;
+        }
+      }
+      wait(500, msec);
+      cataTimer.reset();
+      Motor_Cata1.setVelocity(127, percent);
+      while (Motor_Cata1.position(deg) > ready_Pos - 250 && cataTimer.getTime() < 1500){
+        Motor_Cata1.spinToPosition(ready_Pos - 250, deg, false);
+      }
+      setCataStatus(1);
+    }
     if (cataStatus == 1){
       Motor_Cata1.stop(hold);
     }
