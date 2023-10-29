@@ -8,7 +8,6 @@
 /*----------------------------------------------------------------------------*/
 
 #include "vex.h"
-int a;
 
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
@@ -23,7 +22,6 @@ int a;
 #include "iostream"
 #include "GPS.h"
 #include "skill.h"
-
 
 using namespace std;
 using namespace vex;
@@ -106,15 +104,11 @@ void usercontrol(void) {
     else autocollide = 0;
     
     if(LEFT && !LEFTPressed){  // Auto low lift
-      if (firstTime){  // First time, only close the hook
-        setPistonE1(1);
-        firstTime = !firstTime;
-      }
-      else {
-        autolowlift = !autolowlift;
-        clearLowLiftStep();
-        setPistonE1(!autolowlift);
-      }
+      setPistonE1(1);
+      this_thread::sleep_for(200);
+      setPistonE1(0);
+      autolowlift = !autolowlift;
+      clearLowLiftStep();
     }
     LEFTPressed = LEFT;
     
@@ -178,6 +172,9 @@ void usercontrol(void) {
 
       Brain.Screen.setCursor(5, 1);
       Brain.Screen.print("m_degree: %.1f                     ", m_degree);
+
+      Controller1.Screen.setCursor(1, 1);
+      Controller1.Screen.print("Auton choose: %d", auton_choose);
     }
     print_i += 1;
     print_i %= 100;
