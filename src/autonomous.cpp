@@ -87,14 +87,14 @@ void auton_near_2(){
 void auton_far_1(){
   MyTimer autotimer;
   autotimer.reset();
-  setIntakeSpeed(100);//
-  setCataStatus(5, 1);
-  softStartTimerForward(0, 80, 200);
-  posForwardAbsWithHeading(80, 1100, 0);
-  PIDPosForwardAbs(1400);
-  PIDAngleRotateAbs(105, 2, 0.05, 5);
+  setIntakeSpeed(100);//吸入速度百分百
+  setCataStatus(5, 1);//5，1 中弹射位置  5，0 低弹射位置
+  softStartTimerForward(0, 80, 200);//软启动
+  posForwardAbsWithHeading(80, 1200, 0);//走直线 80速度 1200位置 陀螺仪度数
+  PIDPosForwardAbs(1400);//pid 走到1400 吸到第一颗球 
+  PIDAngleRotateAbs(105, 2, 0.05, 5);//朝向goal （角度 pid kp ki kd）
   setIntakeSpeed(0);
-  posForwardAbsWithHeading(80, 150, 105);
+  posForwardAbsWithHeading(80, 150, 105);//走直线
   setIntakeSpeed(-100);
   voltageForward(10);
   this_thread::sleep_for(300);
