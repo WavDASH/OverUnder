@@ -128,10 +128,10 @@ void usercontrol(void) {
     else setIntakeSpeed(0);
 
     if (BY) setCataStatus(4);
-    if (L1) setCataStatus(2);
-    if (L2 && !L2Pressed) setCataStatus(5);
+    if (L1) setCataStatus(1);
+    if (L2 && !L2Pressed) setCataStatus(2);
     L2Pressed = L2;
-    if (BX && !BXPressed) setCataStatus(6);
+    if (BX && !BXPressed) setCataStatus(3);
     BXPressed = BX;
 
     if (LEFT && !LEFTPressed && BA && !BAPressed){
