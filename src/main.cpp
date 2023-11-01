@@ -115,8 +115,8 @@ void usercontrol(void) {
     if (autolowlift == 1) autoLowLift();
     else if (autocollide == 0) {
       //unlockBase();
-      moveLeft(Ch3 + 1* Ch1);
-      moveRight(Ch3 - 1* Ch1);
+      moveLeft(Ch3 + 2* Ch1);
+      moveRight(Ch3 - 2* Ch1);
     } 
     else {
       moveLeft(autocollide * 15);
