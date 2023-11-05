@@ -22,8 +22,8 @@ controller Controller1 = controller(primary);
   motor Motor_Cata1 = motor(PORT9, ratio36_1, true);
 
   inertial IMU = inertial(PORT21);
-  led PistonE1 = led(Brain.ThreeWirePort.C); //Extension 1
-  led PistonE2 = led(Brain.ThreeWirePort.B); //Extension 2
+  led PistonLeft = led(Brain.ThreeWirePort.C); //Extension 1
+  led PistonRight = led(Brain.ThreeWirePort.B); //Extension 2
   led PistonHook = led(Brain.ThreeWirePort.H); //Hook
   limit limit1 = limit(Brain.ThreeWirePort.E); //Cata LIMIT
   //Vision Sensor 
@@ -46,8 +46,8 @@ controller Controller1 = controller(primary);
   motor Motor_Cata1 = motor(PORT9, ratio36_1, true);
 
   inertial IMU = inertial(PORT21);
-  led PistonE1 = led(Brain.ThreeWirePort.C); //Extension 1
-  led PistonE2 = led(Brain.ThreeWirePort.B); //Extension 2
+  led PistonLeft = led(Brain.ThreeWirePort.C); //Extension 1
+  led PistonRight = led(Brain.ThreeWirePort.B); //Extension 2
   led PistonHook = led(Brain.ThreeWirePort.C); //Hook
   limit limit1 = limit(Brain.ThreeWirePort.E); //Cata LIMIT
   //Vision Sensor 
@@ -70,9 +70,9 @@ controller Controller1 = controller(primary);
   motor Motor_Cata1 = motor(PORT21, ratio36_1, true);
 
   inertial IMU = inertial(PORT20);
-  led PistonE1 = led(Brain.ThreeWirePort.A); //Extension 1
-  led PistonE2 = led(Brain.ThreeWirePort.C); //Extension 2
-  led PistonHook = led(Brain.ThreeWirePort.B); //Hook
+  led PistonHook = led(Brain.ThreeWirePort.A); //Extension 1
+  led PistonLeft = led(Brain.ThreeWirePort.C); //Extension 2
+  led PistonRight = led(Brain.ThreeWirePort.B); //Hook
   limit limit1 = limit(Brain.ThreeWirePort.E); //Cata LIMIT
   //Vision Sensor 
   signature Vision18__SIG_1 = signature (1, 6605, 9541, 8073, 775, 1489, 1132, 3, 0);

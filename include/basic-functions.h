@@ -36,6 +36,7 @@ float getCrtVel();
 float getLeftPos();
 float getRightPos();
 float getForwardPos();
+int getCataStatus();
 void resetLeftPos();
 void resetRightPos();
 void resetForwardPos();
@@ -46,8 +47,8 @@ void resetHeading(float);
 float getPitch();
 
 // Piston
-void setPistonE1(bool);
-void setPistonE2(bool);
+void setPistonLeft(bool);
+void setPistonRight(bool);
 void setPistonE(bool);
 void setPistonHook(bool);
 

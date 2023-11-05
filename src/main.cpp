@@ -89,6 +89,7 @@ void usercontrol(void) {
   bool RightPressed = 0;
   bool LEFTPressed = 0;
   bool BAPressed = 0;
+  bool BBPressed = 0;
   bool L2Pressed = 0;
   bool BXPressed = 0;
   bool extensionStatus = 0;
@@ -104,9 +105,9 @@ void usercontrol(void) {
     else autocollide = 0;
     
     if(LEFT && !LEFTPressed){  // Auto low lift
-      setPistonE1(1);
+      setPistonHook(1);
       this_thread::sleep_for(200);
-      setPistonE1(0);
+      setPistonHook(0);
       autolowlift = !autolowlift;
       clearLowLiftStep();
     }
@@ -128,27 +129,27 @@ void usercontrol(void) {
     else setIntakeSpeed(0);
 
     if (BY) setCataStatus(4);
-    if (L1) setCataStatus(1);
-    if (L2 && !L2Pressed) setCataStatus(2);
+    if (L1) setCataStatus(2);
+    if (L2 && !L2Pressed) setCataStatus(5);
     L2Pressed = L2;
-    if (BX && !BXPressed) setCataStatus(3);
+    if (BX && !BXPressed) setCataStatus(6);
     BXPressed = BX;
 
-    if (LEFT && !LEFTPressed && BA && !BAPressed){
+    if (BB && !BBPressed && BA && !BAPressed){
       extensionStatus = !extensionStatus;
-      setPistonE1(extensionStatus);
-      setPistonE2(extensionStatus);
+      setPistonLeft(extensionStatus);
+      setPistonRight(extensionStatus);
     }
-    else if (LEFT && !LEFTPressed){
+    else if (BB && !BBPressed){
       extensionStatus = !extensionStatus;
-      setPistonE1(extensionStatus);
+      setPistonLeft(extensionStatus);
     }
     else if (BA && !BAPressed){
       extensionStatus = !extensionStatus;
-      setPistonE2(extensionStatus);
+      setPistonRight(extensionStatus);
     }
     BAPressed = BA;
-    LEFTPressed = LEFT;
+    BBPressed = BB;
 
     // only when down and R2 are both pressed we run auton
     if (DOWN) runAuton(auton_choose);
@@ -158,7 +159,6 @@ void usercontrol(void) {
     RightPressed = RIGHT;
 
     m_degree = Motor_Cata1.position(deg) / 3;
-
     if (print_i == 0){
       // Brain.Screen.clearScreen();
       Brain.Screen.setCursor(1, 1);
@@ -168,7 +168,10 @@ void usercontrol(void) {
       Brain.Screen.print("ForwardPosition: %.1f                     ", getForwardPos());
 
       Brain.Screen.setCursor(7, 1);
-      Brain.Screen.print("Auton choose: %d                          ", auton_choose);
+      Brain.Screen.print(getCataStatus());
+
+      Brain.Screen.setCursor(8, 1);
+      Brain.Screen.print(Motor_Cata1.position(deg));
 
       Brain.Screen.setCursor(5, 1);
       Brain.Screen.print("m_degree: %.1f                     ", m_degree);
@@ -191,8 +194,9 @@ void usercontrol(void) {
 //
 int main() {
   wait(1000, msec);
-  setPistonE1(false);
-  setPistonE2(false);
+  setPistonLeft(false);
+  setPistonRight(false);
+  setPistonHook(false);
   IMU.startCalibration();
   while (IMU.isCalibrating()) {
   }

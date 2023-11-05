@@ -6,8 +6,8 @@
 #include "ezize.h"
 
 void autonInit(void) {
-  setPistonE1(false);
-  setPistonE2(false);
+  setPistonLeft(false);
+  setPistonRight(false);
   resetHeading();
   resetForwardPos();
   MyGps.resetForwardPosGps();

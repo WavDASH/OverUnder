@@ -189,22 +189,22 @@ float getPitch() {
   return IMU.pitch();
 }
 
-void setPistonE1(bool _input) {
+void setPistonLeft(bool _input) {
   // set ExpansionRIGHT piston accordingly
-  if (_input) PistonE1.off();
-  else PistonE1.on();
+  if (_input) PistonLeft.off();
+  else PistonLeft.on();
 }
 
-void setPistonE2(bool _input) {
+void setPistonRight(bool _input) {
   // set ExpansionLEFT piston accordingly
-  if (_input) PistonE2.off();
-  else PistonE2.on();
+  if (_input) PistonRight.off();
+  else PistonRight.on();
 }
 
 void setPistonE(bool _input) {
   // set Both Expansion piston accordingly
-  setPistonE1(_input);
-  setPistonE2(_input);
+  setPistonLeft(_input);
+  setPistonRight(_input);
 }
 
 void setPistonHook(bool _input) {
@@ -259,10 +259,10 @@ void autoLowLift(){
 // 5 = switch cata height  4 = initial
 // 0 = pulling down to preshoot position
 int cataMode = 1;
-int cataStatus = 1;
-double ready_Pos;
-int intake_Pos = 0;
-int init_Pos = 0;
+int cataStatus = -1;
+//double ready_Pos = Motor_Cata1.position(deg);
+//int intake_Pos = 0;
+//int init_Pos = 0;
 
 void setCataStatus(int status, int mode){
   cataStatus = status;
@@ -276,59 +276,98 @@ int getCataStatus(){
 
 void catapult(){
   MyTimer cataTimer;
-  while(1){
-    if (cataStatus == 0){ // go to ready position
-      cataTimer.reset();
-      Motor_Cata1.setVelocity(127,percent);
-      while (Motor_Cata1.position(deg) < ready_Pos - intake_Pos - init_Pos && cataTimer.getTime() < 1500){
-        Motor_Cata1.spinToPosition(ready_Pos - intake_Pos - init_Pos, deg, false);
+  double ready_Pos = Motor_Cata1.position(deg);
+  while(true){
+    if (cataStatus == -1){
+      while(1){
+        if (limit1.PRESSED){
+          Motor_Cata1.stop(hold);
+          setCataStatus(1);
+          Motor_Cata1.resetPosition();
+          cataMode = 1;
+          break;
+        }else{
+          Motor_Cata1.setVelocity(45, percent);
+          Motor_Cata1.spin(fwd);
+          ready_Pos = -2;
+        }
       }
+      wait(500, msec);
+      cataTimer.reset();
+      Motor_Cata1.setVelocity(127, percent);
+      while (Motor_Cata1.position(deg) > ready_Pos - 250 && cataTimer.getTime() < 1500){
+        Motor_Cata1.spinToPosition(ready_Pos - 250, deg, false);
+      }
+      setCataStatus(1);
+    }
+    if (cataStatus == 1){
       Motor_Cata1.stop(hold);
     }
-    else if (cataStatus == 1){ //shoot
+    else if (cataStatus == 2){ // R1
       cataTimer.reset();
       Motor_Cata1.setVelocity(127,percent);
       while (Motor_Cata1.position(deg) < ready_Pos + 90 && cataTimer.getTime() < 200){
         Motor_Cata1.spinToPosition(ready_Pos + 90, deg, false);
       }
-      if (cataTimer.getTime() < 500) ready_Pos += 360;
-      cataMode = 1;
       this_thread::sleep_for(200);
       setCataStatus(0);
     }
-    else if (cataStatus == 2){ //switch cata height
-    init_Pos = 0;
-      if (cataMode == 1){
-        intake_Pos = INTAKEMIDPOS;
-        cataMode = 0;
-        setCataStatus(0);
+    else if (cataStatus == 0){ // AFTER 2
+      Motor_Cata1.setVelocity(127,percent);
+      if (cataMode != 1){
+        while (Motor_Cata1.position(deg) < ready_Pos + 360 - INTAKEMIDPOS && cataTimer.getTime() < 1500){
+          Motor_Cata1.spinToPosition(ready_Pos + 360 - INTAKEMIDPOS, deg, false);
+        }
       }
-      else if (cataMode == 0){
-        intake_Pos = 0;
-        cataMode = 1;
-        setCataStatus(0);
+      else{
+        while (Motor_Cata1.position(deg) < ready_Pos + 360 && cataTimer.getTime() < 1500){
+          Motor_Cata1.spinToPosition(ready_Pos + 360, deg, false);
+        }
       }
+      if (cataTimer.getTime() < 1500) ready_Pos = ready_Pos + 360;
+      setCataStatus(1);
     }
-    else if (cataStatus == 3){ // go to initial height
-      init_Pos == 250;
-      intake_Pos = 0;
-      cataMode = 1;
-      setCataStatus(0);
-    }
-    else if (cataStatus == 4){ //initialize
+    else if (cataStatus == 4){ // Y
       if (limit1.PRESSED){
         Motor_Cata1.stop(hold);
-        setCataStatus(0);
+        setCataStatus(1);
         Motor_Cata1.resetPosition();
-        ready_Pos = Motor_Cata1.position(deg);
         cataMode = 1;
-        break;
       }else{
         Motor_Cata1.setVelocity(45, percent);
         Motor_Cata1.spin(fwd);
         ready_Pos = -2;
       }
     }
+    else if (cataStatus == 5){ // R2
+      if (cataMode == 1){
+        cataTimer.reset();
+        Motor_Cata1.setVelocity(127, percent);
+        //while (Motor_Cata1.position(deg)<abbs(ready_Pos - INTAKEMIDPOS) && cataTimer.getTime() < 500){
+          Motor_Cata1.spinToPosition(ready_Pos - INTAKEMIDPOS, deg);
+        //}
+        cataMode = 0;
+        setCataStatus(1);
+      }
+      else{
+        cataTimer.reset();
+        Motor_Cata1.setVelocity(127, percent);
+        //while (Motor_Cata1.position(deg) < ready_Pos && cataTimer.getTime() < 500){
+          Motor_Cata1.spinToPosition(ready_Pos, deg);
+        //}
+        cataMode = 1;
+        setCataStatus(1);
+      }
+    }
+    else if (cataStatus == 6){ // X
+      cataTimer.reset();
+      Motor_Cata1.setVelocity(127, percent);
+      while (Motor_Cata1.position(deg) > ready_Pos - 250 && cataTimer.getTime() < 1500){
+        Motor_Cata1.spinToPosition(ready_Pos - 250, deg, false);
+      }
+      setCataStatus(1);
+    }
+    
+    this_thread::sleep_for(2);
   }
-  this_thread::sleep_for(2);
 }
