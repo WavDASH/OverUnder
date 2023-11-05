@@ -137,16 +137,16 @@ void usercontrol(void) {
 
     if (BB && !BBPressed && BA && !BAPressed){
       extensionStatus = !extensionStatus;
-      setPistonLeft(extensionStatus);
       setPistonRight(extensionStatus);
-    }
-    else if (BB && !BBPressed){
-      extensionStatus = !extensionStatus;
       setPistonLeft(extensionStatus);
     }
     else if (BA && !BAPressed){
       extensionStatus = !extensionStatus;
       setPistonRight(extensionStatus);
+    }
+    else if (BB && !BBPressed){
+      extensionStatus = !extensionStatus;
+      setPistonLeft(extensionStatus);
     }
     BAPressed = BA;
     BBPressed = BB;
@@ -194,8 +194,8 @@ void usercontrol(void) {
 //
 int main() {
   wait(1000, msec);
-  setPistonLeft(false);
   setPistonRight(false);
+  setPistonLeft(false);
   setPistonHook(false);
   IMU.startCalibration();
   while (IMU.isCalibrating()) {

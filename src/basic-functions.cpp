@@ -189,22 +189,22 @@ float getPitch() {
   return IMU.pitch();
 }
 
-void setPistonLeft(bool _input) {
-  // set ExpansionRIGHT piston accordingly
-  if (_input) PistonLeft.off();
-  else PistonLeft.on();
-}
-
 void setPistonRight(bool _input) {
-  // set ExpansionLEFT piston accordingly
+  // set ExpansionRIGHT piston accordingly
   if (_input) PistonRight.off();
   else PistonRight.on();
 }
 
+void setPistonLeft(bool _input) {
+  // set ExpansionLEFT piston accordingly
+  if (_input) PistonLeft.off();
+  else PistonLeft.on();
+}
+
 void setPistonE(bool _input) {
   // set Both Expansion piston accordingly
-  setPistonLeft(_input);
   setPistonRight(_input);
+  setPistonLeft(_input);
 }
 
 void setPistonHook(bool _input) {

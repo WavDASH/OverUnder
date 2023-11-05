@@ -47,8 +47,8 @@ void resetHeading(float);
 float getPitch();
 
 // Piston
-void setPistonLeft(bool);
 void setPistonRight(bool);
+void setPistonLeft(bool);
 void setPistonE(bool);
 void setPistonHook(bool);
 

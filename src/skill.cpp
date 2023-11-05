@@ -5,8 +5,8 @@
 #include "GPS.h"
 
 void skillInit() {
-  setPistonLeft(false);
   setPistonRight(false);
+  setPistonLeft(false);
   MyGps.resetForwardPosGps();
 }
 
