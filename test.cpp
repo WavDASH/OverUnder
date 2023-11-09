@@ -1,7 +1,8 @@
+int cataPos = 0;
 void catapult(){
   MyTimer cataTimer;
   while(1){
-    if (cataStatus == 0){ // go to ready position
+    if (cataStatus == -1){ // go to ready position
       cataTimer.reset();
       Motor_Cata1.setVelocity(127,percent);
       while (Motor_Cata1.position(deg) < ready_Pos - intake_Pos - init_Pos && cataTimer.getTime() < 1500){
@@ -55,7 +56,7 @@ void catapult(){
         ready_Pos = -2;
       }
     }
-    else if (cataStatus == 5){
+    else if (cataStatus == 5){ //hold
       Motor_Cata1.stop(hold);
     }
   }
