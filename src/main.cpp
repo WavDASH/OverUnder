@@ -58,7 +58,7 @@ void pre_auton(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-int auton_choose = 3;
+int auton_choose = 5;
 bool autolowlift = 0;
 bool firstTime = 1;
 
@@ -169,9 +169,6 @@ void usercontrol(void) {
 
       Brain.Screen.setCursor(7, 1);
       Brain.Screen.print(getCataStatus());
-
-      Brain.Screen.setCursor(8, 1);
-      Brain.Screen.print(Motor_Cata1.position(deg));
 
       Brain.Screen.setCursor(5, 1);
       Brain.Screen.print("m_degree: %.1f                     ", m_degree);

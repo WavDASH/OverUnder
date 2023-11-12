@@ -209,6 +209,9 @@ void test(){
   MyTimer autotimer;
   autotimer.reset();
 
+  PIDPosForwardAbs(500);
+  PIDPosForwardAbs(0);  
+
   Brain.Screen.setCursor(8, 1);
   Brain.Screen.print("Auton Time: %.1f                 ", autotimer.getTime());
 }
@@ -226,5 +229,6 @@ void runAuton(int auton_choose) {
   else if (auton_choose == 2) auton_near_2();   //
   else if (auton_choose == 3) auton_far_1();    //
   else if (auton_choose == 4) auton_far_2();
+  else if (auton_choose == 5) test();
 }
 // #endif
