@@ -8,6 +8,7 @@
 void autonInit(void) {
   setPistonRight(false);
   setPistonLeft(false);
+  setPistonHook(false);
   resetHeading();
   resetForwardPos();
   MyGps.resetForwardPosGps();
