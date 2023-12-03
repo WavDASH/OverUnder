@@ -61,12 +61,12 @@ controller Controller1 = controller(primary);
 #ifdef ROBOT3//WU
   motor Motor_BaseLF = motor(PORT2, ratio6_1, true);
   motor Motor_BaseLM = motor(PORT4, ratio6_1, true);
-  motor Motor_BaseLB = motor(PORT9, ratio6_1, true);
+  motor Motor_BaseLB = motor(PORT6, ratio6_1, true);
   motor Motor_BaseRF = motor(PORT11, ratio6_1, false);
   motor Motor_BaseRM = motor(PORT12, ratio6_1, false);
   motor Motor_BaseRB = motor(PORT13, ratio6_1, false);
   motor Motor_Intake1 = motor(PORT14, ratio6_1, false);
-  //motor Motor_Intake2 = motor(PORT21, ratio6_1, false);
+  //motor Motor_Intake2 = motor(PORT21, ratio6_1, false);.
   motor Motor_Cata1 = motor(PORT21, ratio36_1, true);
 
   inertial IMU = inertial(PORT20);
