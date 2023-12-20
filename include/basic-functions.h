@@ -51,6 +51,7 @@ void setPistonRight(bool);
 void setPistonLeft(bool);
 void setPistonE(bool);
 void setPistonHook(bool);
+void setPistonLIFT(bool);
 
 // Catapult
 void setCataStatus(int, int=2);
@@ -60,7 +61,9 @@ void catapult();
 void setIntakeSpeed(float);
 void intake();
 
+void clearhighLiftStep();
 void clearLowLiftStep();
 void autoLowLift();
+void autohighLift();
 
 #endif

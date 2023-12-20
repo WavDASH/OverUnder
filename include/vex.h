@@ -24,7 +24,8 @@
 
 #define repeat(iterations)                                                     \
   for (int iterator = 0; iterator < iterations; iterator++)
+ 
+#define ROBOT3
 
-//#define ROBOT1
- //#define ROBOT2
- #define ROBOT3
+//#define AUTOLIFT
+#define USERDRIVELIFT

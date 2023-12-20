@@ -213,6 +213,19 @@ void setPistonHook(bool _input) {
   else PistonHook.on();
 }
 
+void setPistonLIFT(bool _input) {
+  // extern LIFT1
+  if (_input) {
+    PistonLIFT1.open();
+    PistonLIFT2.open();
+  }
+
+  else {
+    PistonLIFT1.close();
+    PistonLIFT2.close();
+    }
+}
+
 float intake_speed = 0;
 
 void setIntakeSpeed(float _input){
@@ -226,33 +239,59 @@ void intake() {
   }
 }
 
-static int step = 1;
+static int Hstep = 1;
+void clearhighLiftStep(){
+  Hstep = 1;
+}
+static int Lstep = 1;
 void clearLowLiftStep(){
-  step = 1;
+  Lstep = 1;
 }
 
 void autoLowLift(){
-  if (step == 1){
+  if (Lstep == 1){
     moveLeft(50);
     moveRight(60);
   }
-  else if (step == 2){
+  else if (Lstep == 2){
     moveLeft(25);
     moveRight(60);
   }
-  else if (step == 3){
+  else if (Lstep == 3){
     moveLeft(25);
     moveRight(60);
     this_thread::sleep_for(100);
     lockBase();
     this_thread::sleep_for(100);
     unlockBase();
-    step = 4;
+    Lstep = 4;
   }
-  if (IMU.roll() > 13) step = 2;
-  else if (step == 2 && IMU.roll() < 2) step = 3;
+  if (IMU.roll() > 13) Lstep = 2;
+  else if (Lstep == 2 && IMU.roll() < 2) Lstep = 3;
 }
 
+void autohighLift(){
+  if (Hstep == 1){
+    int Ch1 = abbs(C1) < Joystick_LowerDeadzone ? 0 : C1;
+    int Ch3 = abbs(C3) < Joystick_LowerDeadzone ? 0 : C3;
+    moveLeft(Ch3 + 2* Ch1);
+    moveRight(Ch3 - 2* Ch1);
+  }
+  else if (Hstep == 2){
+    setPistonLIFT(0);
+  }
+  else if (Hstep == 3){
+    moveLeft(0);
+    moveRight(0);
+    this_thread::sleep_for(100);
+    lockBase();
+    this_thread::sleep_for(100);
+    unlockBase();
+    Hstep = 4;
+  }
+  if (IMU.roll() > 20) Hstep = 2;
+  else if (Hstep == 2 && IMU.roll() < 5) Hstep = 3;
+}
 
 // ---------- cataStatus --------- 
 // 1 = ready to shoot   2 = shooting   

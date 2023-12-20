@@ -60,6 +60,8 @@ void pre_auton(void) {
 
 int auton_choose = 5;
 bool autolowlift = 0;
+bool autohighlift = 0;
+bool LIFTstatus = 0;
 bool firstTime = 1;
 
 
@@ -106,14 +108,33 @@ void usercontrol(void) {
     
     if(LEFT && !LEFTPressed){  // Auto low lift
       setPistonHook(1);
-      this_thread::sleep_for(200);
-      setPistonHook(0);
       autolowlift = !autolowlift;
       clearLowLiftStep();
     }
     LEFTPressed = LEFT;
+
+    #ifdef AUTOLIFT
+      if(BB && !BBPressed){   // Auto high lift
+      LIFTstatus=!LIFTstatus;
+        setPistonLIFT(1);
+        clearhighLiftStep();
+        autohighlift = !autohighlift;
+    }
+    BBPressed = BB;
+
+    #endif
+
+    #ifdef USERDRIVELIFT
+      if(BB && !BBPressed){   //  high lift
+      LIFTstatus=!LIFTstatus;
+        setPistonLIFT(LIFTstatus);
+      }
+      BBPressed = BB;
+
+    #endif
     
     if (autolowlift == 1) autoLowLift();
+    else if (autohighlift == 1) autohighLift();
     else if (autocollide == 0) {
       //unlockBase();
       moveLeft(Ch3 + 2* Ch1);
@@ -135,17 +156,9 @@ void usercontrol(void) {
     if (BX && !BXPressed) setCataStatus(6);
     BXPressed = BX;
 
-    if (BB && !BBPressed && BA && !BAPressed){
+    if (BA && !BAPressed){
       extensionStatus = !extensionStatus;
       setPistonRight(extensionStatus);
-      setPistonLeft(extensionStatus);
-    }
-    else if (BA && !BAPressed){
-      extensionStatus = !extensionStatus;
-      setPistonRight(extensionStatus);
-    }
-    else if (BB && !BBPressed){
-      extensionStatus = !extensionStatus;
       setPistonLeft(extensionStatus);
     }
     BAPressed = BA;

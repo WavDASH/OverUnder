@@ -63,7 +63,7 @@ void posForwardRelWithHeading(float _power, float _targetPos, float _targetHeadi
   float startPos = getForwardPos();
   while (fabs(getForwardPos() - startPos) < fabs(_targetPos)) {
     float headingError = deg2range(_targetHeading - getHeading());
-    float powerTurn = headingError * 2.0; // kp = 2.0
+    float powerTurn = headingError * 3.0; // kp = 2.0
     if (fabs(powerTurn) > 20) powerTurn = sign(powerTurn) * 20; // PLimit = 20
     moveLeft(_power + powerTurn);
     moveRight(_power - powerTurn);
@@ -89,9 +89,9 @@ void PIDPosForwardAbs(float _target) {
   pid.setTarget(_target);
   pid.setIMax(30);
   pid.setIRange(10);
-  pid.setErrorTolerance(7);
+  pid.setErrorTolerance(5);
   pid.setDTolerance(20);
-  pid.setJumpTime(50);
+  pid.setJumpTime(20);
   while (!pid.targetArrived()){ //} && myTimer.getTime() < 1000 + abbs(target * 10)) {
     pid.update(getForwardPos());
     moveForward(pid.getOutput());
@@ -123,13 +123,13 @@ void PIDPosCurveRel(float left_target, float right_target, float tolerance) {
   pid.setIRange(20);
   pid.setErrorTolerance(tolerance);
   pid.setDTolerance(5);
-  pid.setJumpTime(50);
+  pid.setJumpTime(20);
   while (!pid.targetArrived()){ //} && myTimer.getTime() < 1000 + abbs(target * 10)) {
     float leftPos_err = (getForwardPos() / _target) * left_target - getLeftPos();
     float rightPos_err = (getForwardPos() / _target) * right_target - getRightPos();
     pid.update(getForwardPos());
     float PIDoutput = pid.getOutput();
-    if (fabs(PIDoutput) > 90) PIDoutput = sign(PIDoutput) * 90;
+    if (fabs(PIDoutput) > 40) PIDoutput = sign(PIDoutput) * 40;
     if (ratio > 1){
       moveLeft(PIDoutput + k * leftPos_err);
       moveRight(PIDoutput / ratio + k * rightPos_err);
@@ -207,7 +207,7 @@ void PIDAngleRotateAbs(float _target, float kp, float ki, float kd, float tolera
   pid.setIRange(15);
   pid.setErrorTolerance(tolerance);
   pid.setDTolerance(5);
-  pid.setJumpTime(50);
+  pid.setJumpTime(20);
   pid.setType("turn");
   while (!pid.targetArrived()){ // &&  myTimer.getTime() < 1000 + abbs(target * 3)) {
     pid.update(getHeading());
